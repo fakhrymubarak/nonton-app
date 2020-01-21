@@ -16,7 +16,7 @@ hasil belajar dari kelas BWA selama 10 hari terakhir.
 
 
 ## ShowCase Application
-![This is dashboard screenshot](https://drive.google.com/open?id=1-bqSgVWldZHCPTrksrSaS978MAhWvzIU)
+![This is dashboard screenshot](https://github.com/fakhrymubarak/NontonApp/blob/master/images/Screenshot_1579633218.png)
 
 ### Teacher
 Angga Saputra
