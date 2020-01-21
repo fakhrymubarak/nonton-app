@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Nonton</string>
+    <string name="lewati_perkenalan">Lewati Perkenalan</string>
+    <string name="lanjutkan">Lanjutkan</string>
+
+    <string name="now_playing">NOW PLAYING</string>
+    <string name="now_playing_desc">Lebih mudah untuk mengetahui\nfilm yang sedang tampil</string>
+
+    <string name="presale">PRE SALE</string>
+    <string name="presale_desc">Tidak khawatir ketinggalan\nupdate film terbaru</string>
+
+    <string name="cashless">CASHLESS</string>
+    <string name="cashless_desc">Gunakan e-wallet untuk\ntransaksi tiket nonton</string>
+
+
+    <string name="sign_in">Sign In</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="masuk_akun">Masuk Akun</string>
+
+
+    <string name="sign_up">Sign Up</string>
+    <string name="daftar_akun">Daftar Akun</string>
+    <string name="daftar_akun_baru">Daftar Akun Baru</string>
+    <string name="retype_password">Retype Password</string>
+    <string name="nama">Nama</string>
+    <string name="email_address">Email Address</string>
+    <string name="photo">Photo</string>
+    <string name="selamat_datang">Selamat Datang</string>
+    <string name="upload_nanti">Upload Nanti</string>
+    <string name="simpan_lanjutkan">SIMPAN DAN LANJUTKAN</string>
+
+
+    <string name="home_name">Fakhry Mubarak</string>
+    <string name="coming_soon">COMING SOON</string>
+    <string name="pilih_bangku">Pilih Bangku</string>
+    <string name="beli_tiket">Beli Tiket</string>
+    <string name="checkout">Checkout</string>
+    <string name="cinema">Cinema</string>
+
+    <string name="date_time"><![CDATA[Date & Time]]></string>
+    <string name="edit_profil">Edit Profil</string>
+    <string name="my_wallet">My Wallet</string>
+    <string name="top_up">Top Up</string>
+    <string name="history">History</string>
+    <string name="batal">Batalkan</string>
+
+    <string name="simpah_perubahan">Simpan Perubahan</string>
+
+    <string name="happy_watch">Happy Watching!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lihat_tiket">Lihat Tiket</string>
+    <string name="img_onboarding">onboarding preview image</string>
+    <string name="kembali_ke_beranda">KEMBALI KE DASHBOARD</string>
+    <string name="berhasil_beli">Tiket telah berhasil dibeli\nSelamat menikmati filmmu!</string>
+    <string name="tiketmu">Tiketmu</string>
+    <string name="edit_profile">Edit Profile</string>
+
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="sign_out">Sign Out Akun</string>
+    <string name="sign_in_other">Other Sign In Method</string>
+
+</resources>

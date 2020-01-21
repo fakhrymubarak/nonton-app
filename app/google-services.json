@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "505518046849",
+    "firebase_url": "https://bwanonton.firebaseio.com",
+    "project_id": "bwanonton",
+    "storage_bucket": "bwanonton.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505518046849:android:71d1cd262c766c8bcf1780",
+        "android_client_info": {
+          "package_name": "com.fakhry.nonton"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505518046849-770l1sidllt101laodnm6vu0ecj90ii5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fakhry.nonton",
+            "certificate_hash": "98c698f5fa20c272c638ba2085f53ccc5cef1b29"
+          }
+        },
+        {
+          "client_id": "505518046849-5s8am4v92lslq5sabulvinee678isrvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYUqw6Ale0A5Zl54up4MgIFcHUKow0hC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505518046849-5s8am4v92lslq5sabulvinee678isrvf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

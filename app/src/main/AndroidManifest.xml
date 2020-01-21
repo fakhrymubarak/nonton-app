@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fakhry.nonton">
+    <!-- BERIKUT ADALAH BEBERAPA USER PERMISSION YANG DIBUTUHKAN (INTERNET, WIFI DAN CAMERA -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.noActionBar">
+        <activity android:name=".home.tiket.HistoryActivity" />
+        <activity android:name=".home.setting.MyWalletActivity" />
+        <activity android:name=".home.setting.EditProfileActivity" />
+        <activity android:name=".home.tiket.TiketActivity" />
+        <activity android:name=".DetailActivity" />
+        <activity android:name=".checkout.PilihBangkuActivity" />
+        <activity android:name=".checkout.CheckoutActivity" />
+        <activity android:name=".checkout.CheckoutSuccessActivity" />
+        <activity android:name=".home.HomeActivity" />
+        <activity android:name=".onboarding.OnboardingOneActivity" />
+        <activity android:name=".onboarding.OnboardingTwoActivity" />
+        <activity android:name=".onboarding.OnboardingThreeActivity" />
+        <activity android:name=".sign.signin.SignInActivity" />
+        <activity android:name=".sign.signup.SignUpActivity" />
+        <activity android:name=".sign.signup.SignUpPhotoScreenActivity" />
+        <activity android:name=".SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>
