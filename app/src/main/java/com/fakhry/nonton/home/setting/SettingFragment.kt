@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat.finishAffinity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -14,6 +15,8 @@ import com.fakhry.nonton.R
 import com.fakhry.nonton.sign.signin.SignInActivity
 import com.fakhry.nonton.utils.Preferences
 import kotlinx.android.synthetic.main.fragment_setting.*
+import kotlinx.android.synthetic.main.popup_alert.*
+import kotlinx.android.synthetic.main.popup_alert.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -35,16 +38,22 @@ class SettingFragment : Fragment() {
 
         preferences = Preferences(context!!.applicationContext)
 
+        val profilePict = preferences.getValues("url")
+
         iv_nama.text = preferences.getValues("nama")
         tv_email.text = preferences.getValues("email")
 
 
-        //START - GLIDE, METHOD YANG BERFUNGSI UNTUK MENGECILKAN GAMBAR YANG TERLALU BESAR
-        Glide.with(this)
-            .load(preferences.getValues("url"))
-            .apply(RequestOptions.circleCropTransform())
-            .into(iv_profile)
-        //END - GLIDE, METHOD YANG BERFUNGSI UNTUK MENGECILKAN GAMBAR YANG TERLALU BESAR
+        //START - CONDITION FOR SETTING PROFILE PICTURE
+        if(profilePict == ""){
+            iv_profile.setImageResource(R.drawable.user_pic)
+        }else{
+            Glide.with(this)
+                .load(profilePict)
+                .apply(RequestOptions.circleCropTransform())
+                .into(iv_profile)
+        }
+        //END - CONDITION FOR SETTING PROFILE PICTURE
 
         tv_my_wallet.setOnClickListener{
             val intent = Intent(
@@ -63,29 +72,39 @@ class SettingFragment : Fragment() {
         }
 
         btn_logout.setOnClickListener{
-            activity!!.finish()
-            preferences.setValues("status", "0") //SET STATUS PREFERENCES
+            //Inflate the dialog with custom view
+            val mDialogView = LayoutInflater.from(context).inflate(R.layout.popup_alert, null)
+            //AlertDialogBuilder
+            val mBuilder = AlertDialog.Builder(context!!)
+                .setView(mDialogView)
+            //show dialog
+            val mAlertDialog = mBuilder.show()
 
-            preferences.setValues("username", "") //SET STATUS PREFERENCES
-            preferences.setValues("password", "") //SET STATUS PREFERENCES
-            preferences.setValues("nama", "") //SET STATUS PREFERENCES
-            preferences.setValues("email", "") //SET STATUS PREFERENCES
-            preferences.setValues("url", "") //SET STATUS PREFERENCES
-            preferences.setValues("saldo", "") //SET STATUS PREFERENCES
+            mAlertDialog.tv_alert_title.text = "Logout?"
+            mAlertDialog.tv_alert_msg.text = "Apakan kamu yakin ingin logout akun?"
 
-            var email: String ?=""
-            var nama: String ?=""
-            var password: String ?=""
-            var url: String ?=""
-            var username: String ?=""
-            var saldo: String ?=""
-            val intent = Intent(
-                context,
-                SignInActivity::class.java
-            ).putExtra("EXIT", true)
-            startActivity(intent)
+            mDialogView.btn_yes.setOnClickListener {
+                activity!!.finish()
+                preferences.setValues("status", "0") //SET STATUS PREFERENCES
+
+                preferences.setValues("username", "") //SET STATUS PREFERENCES
+                preferences.setValues("password", "") //SET STATUS PREFERENCES
+                preferences.setValues("nama", "") //SET STATUS PREFERENCES
+                preferences.setValues("email", "") //SET STATUS PREFERENCES
+                preferences.setValues("url", "") //SET STATUS PREFERENCES
+                preferences.setValues("saldo", "") //SET STATUS PREFERENCES
+                val intent = Intent(
+                    context,
+                    SignInActivity::class.java
+                )
+                startActivity(intent)
+                mAlertDialog.dismiss()
+            }
+            mDialogView.btn_no.setOnClickListener {
+                mAlertDialog.dismiss()
+            }
         }
-
-
     }
+
+
 }

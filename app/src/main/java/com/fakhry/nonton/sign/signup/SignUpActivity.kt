@@ -18,8 +18,8 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var sNama: String
     lateinit var sEmail: String
 
-    private lateinit var mFirebaseDatabase: DatabaseReference
     private lateinit var mFirebaseInstance: FirebaseDatabase
+    private lateinit var mFirebaseDatabase: DatabaseReference
     private lateinit var mDatabase: DatabaseReference
 
     private lateinit var preferences: Preferences
@@ -29,8 +29,8 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         mFirebaseInstance = FirebaseDatabase.getInstance()
-        mDatabase = FirebaseDatabase.getInstance().getReference()
         mFirebaseDatabase = mFirebaseInstance.getReference("User")
+        mDatabase = FirebaseDatabase.getInstance().getReference()
 
         iv_back.setOnClickListener {
             val intent = Intent(
@@ -81,7 +81,7 @@ class SignUpActivity : AppCompatActivity() {
         user.username = sUsername
         user.nama = sNama
         user.password = sPassword
-        user.saldo = "0"
+        user.saldo = "100000"
 
 
         if (sUsername != null) {
@@ -100,13 +100,16 @@ class SignUpActivity : AppCompatActivity() {
                     preferences.setValues("nama", data.nama.toString())
                     preferences.setValues("username", data.username.toString())
                     preferences.setValues("password", data.password.toString())
+                    preferences.setValues("saldo", data.saldo.toString())
                     preferences.setValues("email", data.email.toString())
+
                     preferences.setValues("status", "1")
 
                     val intent = Intent(
                         this@SignUpActivity,
                         SignUpPhotoScreenActivity::class.java
                     ).putExtra("nama", data.nama)
+                        .putExtra("username", data.username)
                     startActivity(intent)
 
                 } else {

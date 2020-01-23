@@ -23,14 +23,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/shape_rectangle_pink"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/simpah_perubahan"
         android:textColor="@android:color/white"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -213,6 +214,24 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
         app:layout_constraintEnd_toEndOf="@+id/iv_profile"
-        app:srcCompat="@drawable/ic_btn_upload" />
+        app:srcCompat="@drawable/ic_btn_delete" />
+
+    <Button
+        android:id="@+id/btn_save_edit_profile_pict"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/shape_rectangle_pink"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Save New Profile Picture"
+        android:textColor="@color/colorWhite"
+        android:textSize="10sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/iv_add"
+        app:layout_constraintTop_toTopOf="@+id/iv_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

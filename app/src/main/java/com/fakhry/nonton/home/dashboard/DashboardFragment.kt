@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.fakhry.nonton.DetailActivity
 import com.fakhry.nonton.R
 import com.fakhry.nonton.home.model.Film
+import com.fakhry.nonton.home.setting.SettingFragment
 import com.fakhry.nonton.utils.Preferences
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
@@ -44,15 +45,26 @@ class DashboardFragment : Fragment() {
         preferences = Preferences(activity!!.applicationContext)
         mDatabase = FirebaseDatabase.getInstance().getReference("Film")
 
+        val profilePict = preferences.getValues("url")
+
         tv_nama.setText(preferences.getValues("nama"))
         if (!preferences.getValues("saldo").equals("")) {
             currency(preferences.getValues("saldo")!!.toDouble(), tv_saldo)
         }
 
-        Glide.with(this)
-            .load(preferences.getValues("url"))
-            .apply(RequestOptions.circleCropTransform())
-            .into(iv_profile)
+        //START - CONDITION FOR SETTING PROFILE PICTURE
+        if(profilePict == ""){
+            iv_profile.setImageResource(R.drawable.user_pic)
+        }else{
+            Glide.with(this)
+                .load(profilePict)
+                .apply(RequestOptions.circleCropTransform())
+                .into(iv_profile)
+        }
+        //END - CONDITION FOR SETTING PROFILE PICTURE
+        iv_profile.setOnClickListener {
+            //I am planning this to move into setting fragment
+        }
 
         rv_now_playing.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

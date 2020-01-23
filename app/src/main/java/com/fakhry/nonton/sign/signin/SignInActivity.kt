@@ -13,10 +13,10 @@ import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity() {
 
-    lateinit var iUsername: String
-    lateinit var iPassword: String
+    private lateinit var iUsername: String
+    private lateinit var iPassword: String
 
-    lateinit var mDatabase: DatabaseReference
+    private lateinit var mDatabase: DatabaseReference
     lateinit var preferences: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,14 +33,18 @@ class SignInActivity : AppCompatActivity() {
             iUsername = et_username.text.toString()
             iPassword = et_password.text.toString()
 
-            if (iUsername.equals("")) {
-                et_username.error = "Username tidak boleh kosong"
-                et_username.requestFocus()
-            } else if (iPassword.equals("")) {
-                et_password.error = "Password tidak boleh kosong"
-                et_password.requestFocus()
-            } else {
-                pushLogin(iUsername, iPassword) //METHOD UNTUK LOGIN
+            when {
+                iUsername == "" -> {
+                    et_username.error = "Username tidak boleh kosong"
+                    et_username.requestFocus()
+                }
+                iPassword == "" -> {
+                    et_password.error = "Password tidak boleh kosong"
+                    et_password.requestFocus()
+                }
+                else -> {
+                    pushLogin(iUsername, iPassword) //METHOD UNTUK LOGIN
+                }
             }
         }
         //END - PENGECEKAN USERNAME DAN PASSWORD KETIKA TOMBOL LOGIN DI TEKAN

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.fakhry.nonton.R
 import com.fakhry.nonton.home.HomeActivity
 import com.fakhry.nonton.home.model.Film
+import com.fakhry.nonton.home.tiket.TiketActivity
 import kotlinx.android.synthetic.main.activity_checkout_success.*
 
 
@@ -19,24 +20,24 @@ class CheckoutSuccessActivity : AppCompatActivity() {
 
         tv_checkout.text = "Tiket telah berhasil dibeli\nSelamat menonton " + data.judul + "!!"
 
-        btn_tiket.setOnClickListener{
+        btn_tiket.setOnClickListener {
             finishAffinity()
-//            val newFragment = Fragment()
-//            val transaction = supportFragmentManager.beginTransaction()
-//            transaction.replace(R.id.fragment_tiket, newFragment)
-//            transaction.addToBackStack(null)
-//            transaction.commit()
 
-//            val intent = Intent(this,
-//                TiketFragment::class.java)
-//            startActivity(intent)
+            val mIntent = Intent(this, TiketActivity::class.java)
+            val bundle = Bundle()
+            bundle.putParcelable("data", data)
+            mIntent.putExtras(bundle)
+            startActivity(mIntent)
+
         }
 
 
         btn_home.setOnClickListener {
             finishAffinity()
-            val intent = Intent(this,
-                HomeActivity::class.java)
+            val intent = Intent(
+                this,
+                HomeActivity::class.java
+            )
             startActivity(intent)
         }
     }

@@ -11,8 +11,6 @@ import com.fakhry.nonton.R
 import com.fakhry.nonton.checkout.model.Checkout
 import com.fakhry.nonton.home.model.Film
 import kotlinx.android.synthetic.main.activity_tiket.*
-import kotlinx.android.synthetic.main.activity_tiket.iv_back
-import kotlinx.android.synthetic.main.activity_tiket.rc_checkout
 import kotlinx.android.synthetic.main.popup_qr_code.view.*
 
 
@@ -45,19 +43,28 @@ class TiketActivity : AppCompatActivity() {
         iv_back.setOnClickListener {
             finish()
         }
-        iv_qr_code.setOnClickListener {
-            //Inflate the dialog with custom view
-            val mDialogView = LayoutInflater.from(this).inflate(R.layout.popup_qr_code, null)
-            //AlertDialogBuilder
-            val mBuilder = AlertDialog.Builder(this)
-                .setView(mDialogView)
-            //show dialog
-            val mAlertDialog = mBuilder.show()
 
-            mDialogView.btn_yes.setOnClickListener {
-                //dismiss dialog
-                mAlertDialog.dismiss()
-            }
+        iv_qr_code_1.setOnClickListener {
+            alertDialog()
+        }
+
+        cl_qr_code_2.setOnClickListener {
+            alertDialog()
+        }
+    }
+
+    private fun alertDialog() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.popup_qr_code, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+        val mAlertDialog = mBuilder.show()
+
+        mDialogView.btn_yes.setOnClickListener {
+            //dismiss dialog
+            mAlertDialog.dismiss()
         }
     }
 }
