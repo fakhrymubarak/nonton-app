@@ -1,7 +1,7 @@
-# NontonApp
+# Nonton
 hasil belajar dari kelas BWA selama 10 hari terakhir.
 
-## Fiture
+## Features
 1. Splashscreen
 2. Onboarding
 3. SignIn, SignUp dan Sign Out
@@ -9,6 +9,8 @@ hasil belajar dari kelas BWA selama 10 hari terakhir.
 5. Fragment
 6. Edit Profil pada DataBase
 7. Preferences
+8. Top Up
+9. Buy Ticket
 
 ## Teknologi
 1. Firebase
