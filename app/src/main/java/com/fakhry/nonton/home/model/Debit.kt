@@ -6,6 +6,6 @@ import kotlinx.android.parcel.Parcelize
 //UNTUK MENGAMBIL FILM DARI DATA BASE
 @Parcelize
 data class Debit (
-    var id: String ?="",
-    var amount: String ?=""
+    var amount: String ?="",
+    var id: String ?=""
 ): Parcelable

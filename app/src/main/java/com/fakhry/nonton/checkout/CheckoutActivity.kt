@@ -21,6 +21,8 @@ import com.fakhry.nonton.checkout.model.Checkout
 import com.fakhry.nonton.home.model.Film
 import com.fakhry.nonton.home.tiket.TiketActivity
 import com.fakhry.nonton.utils.Preferences
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.popup_alert.*
 import kotlinx.android.synthetic.main.popup_alert.view.*
@@ -36,6 +38,10 @@ class CheckoutActivity : AppCompatActivity() {
 
     private lateinit var preferences: Preferences
 
+    private lateinit var mFirebaseInstance: FirebaseDatabase
+    private lateinit var mFirebaseDatabase: DatabaseReference
+    private lateinit var mDatabase: DatabaseReference
+
     @SuppressLint("InflateParams", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +50,14 @@ class CheckoutActivity : AppCompatActivity() {
         @Suppress("UNCHECKED_CAST")
         dataList = intent.getSerializableExtra("data1") as ArrayList<Checkout>
         val data = intent.getParcelableExtra<Film>("data2")
+
         preferences = Preferences(this)
+
+        mFirebaseInstance = FirebaseDatabase.getInstance()
+        mFirebaseDatabase = mFirebaseInstance.getReference("Riwayat Transaksi")
+        mDatabase = FirebaseDatabase.getInstance().getReference()
+
+
         val saldo = preferences.getValues("saldo")
 
         // MENGHITUNG TOTAL HARGA SETELAH MEMILIH BANGKU
@@ -71,6 +84,27 @@ class CheckoutActivity : AppCompatActivity() {
                 mAlertDialog.tv_alert_msg.text = "Kamu akan membeli tiket " + data.judul + "?"
 
                 mDialogView.btn_yes.setOnClickListener {
+
+                    val tiketId : String = "tiket-" + UUID.randomUUID()
+
+                    mFirebaseDatabase.child(preferences.getValues("username").toString())
+                        .child("Pengeluaran")
+                        .child(tiketId)
+                        .child("id")
+                        .setValue(tiketId)
+
+                    mFirebaseDatabase.child(preferences.getValues("username").toString())
+                        .child("Pengeluaran")
+                        .child(tiketId)
+                        .child("price")
+                        .setValue(total.toString())
+
+                    mFirebaseDatabase.child(preferences.getValues("username").toString())
+                        .child("Pengeluaran")
+                        .child(tiketId)
+                        .child("title")
+                        .setValue("Tiket : " + data.judul)
+
                     showNotif(data)
                     finishAffinity()
 

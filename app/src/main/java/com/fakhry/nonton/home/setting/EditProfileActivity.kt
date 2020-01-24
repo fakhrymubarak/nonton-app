@@ -85,7 +85,6 @@ class EditProfileActivity : AppCompatActivity(), PermissionListener {
                 iv_profile.setImageResource(R.drawable.user_pic)
             } else {
                 ImagePicker.with(this)
-                    .cameraOnly()
                     .crop()                    //Crop image(Optional), Check Customization for more option
                     .compress(1024)            //Final image size will be less than 1 MB(Optional)
                     .maxResultSize(
@@ -94,8 +93,6 @@ class EditProfileActivity : AppCompatActivity(), PermissionListener {
                     )    //Final image resolution will be less than 1080 x 1080(Optional)
                     .start()
             }
-            btn_save_edit_profile_pict.visibility = View.VISIBLE
-            btn_save_edit.visibility = View.INVISIBLE
         }
         //END - KONDISI KETIKA BUTTON ADD FOTO DI TEKAN
 
@@ -303,7 +300,6 @@ class EditProfileActivity : AppCompatActivity(), PermissionListener {
 
     override fun onPermissionGranted(response: PermissionGrantedResponse?) {
         ImagePicker.with(this)
-            .cameraOnly()
             .crop()                    //Crop image(Optional), Check Customization for more option
             .compress(1024)            //Final image size will be less than 1 MB(Optional)
             .maxResultSize(
@@ -340,12 +336,16 @@ class EditProfileActivity : AppCompatActivity(), PermissionListener {
                 .apply(RequestOptions.circleCropTransform())
                 .into(iv_profile)
 
-            btn_save_edit.visibility = View.VISIBLE
+            btn_save_edit_profile_pict.visibility = View.VISIBLE
+            btn_save_edit.visibility = View.INVISIBLE
             iv_add.setImageResource(R.drawable.ic_btn_delete)
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Gagal mengambil gambar", Toast.LENGTH_SHORT).show()
+            btn_save_edit_profile_pict.visibility = View.INVISIBLE
+            btn_save_edit.visibility = View.VISIBLE
+
         }
     }
 }

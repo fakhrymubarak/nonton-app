@@ -116,8 +116,6 @@ class SignUpPhotoScreenActivity : AppCompatActivity(), PermissionListener {
                             //START - TRANSFER URL TO DATABASE
                             mFirebaseDatabase.child(intent.getStringExtra("username")).child("url").setValue(it.toString())
 
-                            Log.v("berani", "pUrl 1 = " + preferences.getValues("url").toString())
-
                             finishAffinity()
                             val intent = Intent(
                                 this@SignUpPhotoScreenActivity,
