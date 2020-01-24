@@ -24,6 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.noActionBar">
+        <activity android:name=".home.setting.TopUpActivity"></activity>
         <activity android:name=".home.tiket.HistoryActivity" />
         <activity android:name=".home.setting.MyWalletActivity" />
         <activity android:name=".home.setting.EditProfileActivity" />

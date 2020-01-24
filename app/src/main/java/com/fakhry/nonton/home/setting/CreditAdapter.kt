@@ -4,18 +4,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.fakhry.nonton.R
-import com.fakhry.nonton.home.model.RiwayatTransaksi
+import com.fakhry.nonton.home.model.Credit
 
 
 //ADAPTER YANG ATUR ISI DARI FILM NYA
-class TransaksiAdapter(private var data: List<RiwayatTransaksi>,
-                       private val listener: (RiwayatTransaksi) -> Unit)
-    : RecyclerView.Adapter<TransaksiAdapter.LeagueViewHolder>() {
+class CreditAdapter(private var data: List<Credit>,
+                    private val listener: (Credit) -> Unit)
+    : RecyclerView.Adapter<CreditAdapter.LeagueViewHolder>() {
 
     lateinit var ContextAdapter : Context
 
@@ -39,11 +37,11 @@ class TransaksiAdapter(private var data: List<RiwayatTransaksi>,
 //        private val tvWaktu: TextView = view.findViewById(R.id.tv_waktu)
         private val tvSaldo: TextView = view.findViewById(R.id.tv_saldo)
 
-        fun bindItem(data: RiwayatTransaksi, listener: (RiwayatTransaksi) -> Unit, context : Context, position : Int) {
+        fun bindItem(data: Credit, listener: (Credit) -> Unit, context : Context, position : Int) {
 
-            tvTransaksi.text = data.pemasukan
+            tvTransaksi.text = data.id
 //            tvWaktu.text = data
-            tvSaldo.text = data.pengeluaran
+            tvSaldo.text = data.price
 
             itemView.setOnClickListener {
                 listener(data)

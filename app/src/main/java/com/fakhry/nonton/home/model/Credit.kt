@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 //UNTUK MENGAMBIL FILM DARI DATA BASE
 @Parcelize
-data class Pengeluaran (
-    var film: String ?="",
-    var harga: String ?=""
+data class Credit (
+    var id: String ?="",
+    var price: String ?=""
 ): Parcelable

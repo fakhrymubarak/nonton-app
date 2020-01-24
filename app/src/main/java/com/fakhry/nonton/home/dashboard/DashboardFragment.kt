@@ -66,9 +66,9 @@ class DashboardFragment : Fragment() {
             //I am planning this to move into setting fragment
         }
 
-        rv_now_playing.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rv_now_playing.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rv_coming_soon.layoutManager = LinearLayoutManager(context!!.applicationContext)
+
         getData()
     }
 
@@ -78,7 +78,6 @@ class DashboardFragment : Fragment() {
 
                 dataList.clear()
                 for (getdataSnapshot in dataSnapshot.getChildren()) {
-
                     val film = getdataSnapshot.getValue(Film::class.java!!)
                     dataList.add(film!!)
                 }
