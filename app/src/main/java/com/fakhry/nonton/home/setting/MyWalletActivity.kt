@@ -3,6 +3,7 @@ package com.fakhry.nonton.home.setting
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +21,7 @@ class MyWalletActivity : AppCompatActivity() {
     private lateinit var preferences: Preferences
 
     private lateinit var mDatabaseDebit: DatabaseReference
-    private lateinit var mDatabaseKredit: DatabaseReference
+    private lateinit var mDatabaseCredit: DatabaseReference
 
     private var dataListDebit = ArrayList<Debit>()
     private var dataListCredit = ArrayList<Credit>()
@@ -31,18 +32,35 @@ class MyWalletActivity : AppCompatActivity() {
 
         preferences = Preferences(applicationContext)
 
-        mDatabaseDebit = FirebaseDatabase.getInstance().getReference("Riwayat Transaksi")
+        mDatabaseDebit = FirebaseDatabase.getInstance().getReference("User")
             .child(preferences.getValues("username").toString())
-            .child("Pemasukan")
-        mDatabaseKredit = FirebaseDatabase.getInstance().getReference("Riwayat Transaksi")
+            .child("debit")
+        mDatabaseCredit = FirebaseDatabase.getInstance().getReference("User")
             .child(preferences.getValues("username").toString())
-            .child("Pengeluaran")
+            .child("credit")
 
 
-        rv_transaction_debit.layoutManager =
-            LinearLayoutManager(applicationContext)
-        rv_transaction_kredit.layoutManager =
-            LinearLayoutManager(applicationContext)
+//        if(mDatabaseCredit == null && mDatabaseDebit == null){
+//            rv_transaction_debit.visibility = View.INVISIBLE
+//            rv_transaction_kredit.visibility = View.INVISIBLE
+//            tv_transaction_debit.visibility = View.VISIBLE
+//            tv_transaction_credit.visibility = View.VISIBLE
+//        }else
+//            if (mDatabaseDebit == null){
+//                rv_transaction_debit.visibility = View.INVISIBLE
+//                tv_transaction_debit.visibility = View.VISIBLE
+//            }else if (mDatabaseCredit == null){
+//                rv_transaction_kredit.visibility = View.INVISIBLE
+//                tv_transaction_credit.visibility = View.VISIBLE
+//            }else{
+//                rv_transaction_debit.layoutManager =
+//                    LinearLayoutManager(applicationContext)
+//                rv_transaction_kredit.layoutManager =
+//                    LinearLayoutManager(applicationContext)
+//                getData()
+//            }
+        rv_transaction_debit.layoutManager = LinearLayoutManager(applicationContext)
+        rv_transaction_kredit.layoutManager = LinearLayoutManager(applicationContext)
         getData()
 
         //SHOW SALDO
@@ -92,7 +110,7 @@ class MyWalletActivity : AppCompatActivity() {
                 Toast.makeText(this@MyWalletActivity, "" + error.message, Toast.LENGTH_LONG).show()
             }
         })
-        mDatabaseKredit.addValueEventListener(object : ValueEventListener {
+        mDatabaseCredit.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 dataListCredit.clear()
                 for (getdataSnapshot in dataSnapshot.getChildren()) {

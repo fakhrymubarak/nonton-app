@@ -10,12 +10,10 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import com.fakhry.nonton.R
-import com.fakhry.nonton.home.model.Film
 import com.fakhry.nonton.home.tiket.TiketActivity
 import com.fakhry.nonton.utils.Preferences
 import com.google.firebase.database.DatabaseReference
@@ -24,33 +22,25 @@ import kotlinx.android.synthetic.main.activity_top_up.*
 import kotlinx.android.synthetic.main.popup_alert.*
 import kotlinx.android.synthetic.main.popup_alert.view.*
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TopUpActivity : AppCompatActivity() {
     private lateinit var preferences: Preferences
-
-    private lateinit var mFirebaseInstance: FirebaseDatabase
-    private lateinit var mFirebaseDatabase: DatabaseReference
     private lateinit var mDatabase: DatabaseReference
 
     lateinit var sAmount: String
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_up)
 
         preferences = Preferences(applicationContext)
-
-        mFirebaseInstance = FirebaseDatabase.getInstance()
-        mFirebaseDatabase = mFirebaseInstance.getReference("Riwayat Transaksi")
-        mDatabase = FirebaseDatabase.getInstance().getReference()
+        mDatabase = FirebaseDatabase.getInstance().getReference("User")
 
         btn_top_up.setOnClickListener{
-            var topUpId : String = "topup-" + UUID.randomUUID()
             sAmount = et_amount.text.toString()
-
-            alertDialog(sAmount ,topUpId)
+            alertDialog(sAmount)
         }
 
         iv_back.setOnClickListener{
@@ -109,7 +99,7 @@ class TopUpActivity : AppCompatActivity() {
         notificationManager.notify(115, builder.build())
     }
 
-    private fun alertDialog(amount : String, topUpId : String) {
+    private fun alertDialog(amount : String) {
         //Inflate the dialog with custom view
         val mDialogView = LayoutInflater.from(this@TopUpActivity).inflate(R.layout.popup_alert, null)
         //AlertDialogBuilder
@@ -118,21 +108,39 @@ class TopUpActivity : AppCompatActivity() {
         //show dialog
         val mAlertDialog = mBuilder.show()
 
+
         mAlertDialog.tv_alert_title.text = "Top Up?"
         mAlertDialog.tv_alert_msg.text = "Kamu akan top up sebesar " + currency(amount.toDouble()) + "?"
 
         mDialogView.btn_yes.setOnClickListener {
-            mFirebaseDatabase.child(preferences.getValues("username").toString())
-                .child("Pemasukan")
+            val saldo = preferences.getValues("saldo")
+            val saldoTersisa : Int = saldo!!.toInt() + amount.toInt()
+            val currentTimeId: String = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.getDefault()).format(Date())
+            val topUpId : String = "topup-"+ currentTimeId + "-" +UUID.randomUUID()
+
+            val setCurrentTime : String =  SimpleDateFormat("dd MMMM yyyy,  HH:mm:ss", Locale.getDefault()).format(Date())
+
+            val mDatabaseDebit = mDatabase.child(preferences.getValues("username").toString())
+                .child("debit")
                 .child(topUpId)
-                .child("id")
+
+            mDatabaseDebit.child("id")
                 .setValue(topUpId)
 
-            mFirebaseDatabase.child(preferences.getValues("username").toString())
-                .child("Pemasukan")
-                .child(topUpId)
-                .child("amount")
-                .setValue(sAmount)
+            mDatabaseDebit.child("amount")
+                .setValue(amount)
+
+            mDatabaseDebit.child("date")
+                .setValue(setCurrentTime)
+
+            mDatabaseDebit.child("detail")
+                .setValue("Top Up")
+
+            mDatabase.child(preferences.getValues("username").toString())
+                .child("saldo")
+                .setValue(saldoTersisa.toString())
+
+            preferences.setValues("saldo", saldoTersisa.toString())
 
             Toast.makeText(this, "Top Up Berhasil Dilakukan", Toast.LENGTH_SHORT).show()
 
@@ -146,9 +154,9 @@ class TopUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun currency(harga: Double) : String {
+    private fun currency(amount: Double) : String {
         val localeID = Locale("in", "ID")
         val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
-        return formatRupiah.format(harga)
+        return formatRupiah.format(amount)
     }
 }

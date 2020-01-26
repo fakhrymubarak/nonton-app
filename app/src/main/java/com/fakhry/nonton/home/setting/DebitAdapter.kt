@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.fakhry.nonton.R
+import com.fakhry.nonton.home.dashboard.DashboardFragment
 import com.fakhry.nonton.home.model.Debit
 import java.text.NumberFormat
 import java.util.*
@@ -38,27 +39,20 @@ class DebitAdapter(
         private val tvTitle: TextView = view.findViewById(R.id.tv_title_transaction)
         private val tvTransaksi: TextView = view.findViewById(R.id.tv_id_transaction)
         private val tvSaldo: TextView = view.findViewById(R.id.tv_amount_transaction)
-
+        private val tvDate: TextView = view.findViewById(R.id.tv_date_transaction)
 
         fun bindItem(data: Debit, listener: (Debit) -> Unit, context: Context, position: Int) {
-            tvTitle.setTextColor(Color.parseColor("#52E300"))
-            tvTransaksi.setTextColor(Color.parseColor("#52E300"))
             tvSaldo.setTextColor(Color.parseColor("#52E300"))
 
-            tvTitle.text = "Top Up"
+            tvTitle.text = data.detail
             tvTransaksi.text = data.id
-            currency(data.amount!!.toDouble(), tvSaldo)
+            tvDate.text = data.date
+            DashboardFragment().currency(data.amount!!.toDouble(), tvSaldo)
 
             itemView.setOnClickListener {
                 listener(data)
             }
         }
-        private fun currency(harga: Double, textView: TextView) {
-            val localeID = Locale("in", "ID")
-            val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
-            textView.setText(formatRupiah.format(harga))
-        }
     }
-
 }
 

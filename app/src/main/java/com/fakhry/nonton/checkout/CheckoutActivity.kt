@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -27,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.popup_alert.*
 import kotlinx.android.synthetic.main.popup_alert.view.*
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 import kotlin.collections.ArrayList
@@ -37,9 +39,6 @@ class CheckoutActivity : AppCompatActivity() {
     private var total: Int = 0
 
     private lateinit var preferences: Preferences
-
-    private lateinit var mFirebaseInstance: FirebaseDatabase
-    private lateinit var mFirebaseDatabase: DatabaseReference
     private lateinit var mDatabase: DatabaseReference
 
     @SuppressLint("InflateParams", "SetTextI18n")
@@ -47,24 +46,18 @@ class CheckoutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout)
 
+        val data = intent.getParcelableExtra<Film>("data2")
         @Suppress("UNCHECKED_CAST")
         dataList = intent.getSerializableExtra("data1") as ArrayList<Checkout>
-        val data = intent.getParcelableExtra<Film>("data2")
 
         preferences = Preferences(this)
-
-        mFirebaseInstance = FirebaseDatabase.getInstance()
-        mFirebaseDatabase = mFirebaseInstance.getReference("Riwayat Transaksi")
-        mDatabase = FirebaseDatabase.getInstance().getReference()
-
+        mDatabase = FirebaseDatabase.getInstance().getReference("User")
 
         val saldo = preferences.getValues("saldo")
 
-        // MENGHITUNG TOTAL HARGA SETELAH MEMILIH BANGKU
         for (a in dataList.indices) {
             total += dataList[a].harga!!.toInt()
         }
-
 
         dataList.add(Checkout("Total Harus Dibayar", total.toString()))
 
@@ -81,29 +74,37 @@ class CheckoutActivity : AppCompatActivity() {
                 //show dialog
                 val mAlertDialog = mBuilder.show()
 
-                mAlertDialog.tv_alert_msg.text = "Kamu akan membeli tiket " + data.judul + "?"
+                mAlertDialog.tv_alert_title.text = "Beli Tiket?"
+                mAlertDialog.tv_alert_msg.text = "Kamu akan membeli tiket " + data!!.judul + "?"
 
                 mDialogView.btn_yes.setOnClickListener {
+                    val currentTimeId: String = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.getDefault()).format(Date())
+                    val tiketId : String = "tiket-"+ currentTimeId + "-" +UUID.randomUUID()
+                    val saldoTersisa : Int = saldo.toInt() - total
 
-                    val tiketId : String = "tiket-" + UUID.randomUUID()
+                    val setCurrentTime : String =  SimpleDateFormat("dd MMMM yyyy,  HH:mm:ss", Locale.getDefault()).format(Date())
 
-                    mFirebaseDatabase.child(preferences.getValues("username").toString())
-                        .child("Pengeluaran")
+                    val mDatabaseCredit  = mDatabase.child(preferences.getValues("username").toString())
+                        .child("credit")
                         .child(tiketId)
-                        .child("id")
+
+                    mDatabaseCredit.child("id")
                         .setValue(tiketId)
 
-                    mFirebaseDatabase.child(preferences.getValues("username").toString())
-                        .child("Pengeluaran")
-                        .child(tiketId)
-                        .child("price")
+                    mDatabaseCredit.child("price")
                         .setValue(total.toString())
 
-                    mFirebaseDatabase.child(preferences.getValues("username").toString())
-                        .child("Pengeluaran")
-                        .child(tiketId)
-                        .child("title")
+                    mDatabaseCredit.child("detail")
                         .setValue("Tiket : " + data.judul)
+
+                    mDatabaseCredit.child("date")
+                        .setValue(setCurrentTime)
+
+                    mDatabase.child(preferences.getValues("username").toString())
+                        .child("saldo")
+                        .setValue(saldoTersisa.toString())
+
+                    preferences.setValues("saldo", saldoTersisa.toString())
 
                     showNotif(data)
                     finishAffinity()
@@ -121,7 +122,6 @@ class CheckoutActivity : AppCompatActivity() {
                 }
             }
         }
-
 
         btn_home.setOnClickListener {
             finish()
@@ -155,11 +155,6 @@ class CheckoutActivity : AppCompatActivity() {
             val mChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, importance)
             notificationManager.createNotificationChannel(mChannel)
         }
-
-//        val mIntent = Intent(this, CheckoutSuccessActivity::class.java)
-//        val bundle = Bundle()
-//        bundle.putString("id", "id_film")
-//        mIntent.putExtras(bundle)
 
         val mIntent = Intent(this, TiketActivity::class.java)
         val bundle = Bundle()

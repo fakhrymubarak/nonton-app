@@ -9,8 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.fakhry.nonton.R
 import com.fakhry.nonton.home.model.Credit
-import java.text.NumberFormat
-import java.util.*
+import com.fakhry.nonton.home.dashboard.DashboardFragment
 
 class CreditAdapter(
     private var data: List<Credit>,
@@ -38,26 +37,21 @@ class CreditAdapter(
         private val tvTitle: TextView = view.findViewById(R.id.tv_title_transaction)
         private val tvTransaksi: TextView = view.findViewById(R.id.tv_id_transaction)
         private val tvSaldo: TextView = view.findViewById(R.id.tv_amount_transaction)
+        private val tvDate: TextView = view.findViewById(R.id.tv_date_transaction)
 
         fun bindItem(data: Credit, listener: (Credit) -> Unit, context: Context, position: Int) {
-            tvTitle.setTextColor(Color.parseColor("#FF2667"))
-            tvTransaksi.setTextColor(Color.parseColor("#FF2667"))
             tvSaldo.setTextColor(Color.parseColor("#FF2667"))
 
-            tvTitle.text = data.title
+            tvTitle.text = data.detail
             tvTransaksi.text = data.id
-            currency(data.price!!.toDouble(), tvSaldo)
+            tvDate.text = data.date
+            DashboardFragment().currency(data.price!!.toDouble(), tvSaldo)
 
             itemView.setOnClickListener {
                 listener(data)
             }
         }
-
-        private fun currency(harga: Double, textView: TextView) {
-            val localeID = Locale("in", "ID")
-            val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
-            textView.setText(formatRupiah.format(harga))
-        }
     }
 }
+
 
