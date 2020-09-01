@@ -1,5 +1,5 @@
 # Nonton
-hasil belajar dari kelas BWA selama 10 hari terakhir.
+Mobile application for ordering a movie ticket. Written in kotlin and using firebase database.
 
 ## Features
 1. Splashscreen
